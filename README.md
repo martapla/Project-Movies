@@ -1,6 +1,6 @@
 # Star Wars Starship Database
 
-Starship Star Wars database using the Star Wars `API`: https://swapi.dev/
+Starship Star Wars database using the Star Wars `API`: https://swapi.tech/
 
 To get the images: https://starwars-visualguide.com/
 

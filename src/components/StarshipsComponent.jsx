@@ -2,42 +2,45 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 
-const ApiUrl = "https://swapi.dev/api/starships/"
-
 const StarshipsComponent = () => {
 
     const [starships, setStarships] = useState([]);
     const [page, setPage] = useState(1);
 
+  
+    const fetchStarshipDetails = async () => {
+   
+          const response = await fetch(`https://www.swapi.tech/api/starships?page=${page}`);
+          const data = await response.json();
 
-    const fetchStarships = async () => {
+          const mappedStarships = await Promise.all(
+              data.results.map(async (starship) => {
+                  const detailResponse = await fetch(starship.url);
+                  const detailData = await detailResponse.json();
 
-        const response = await fetch(`${ApiUrl}?page=${page}`);
-        const data = await response.json();
-        // setStarships(data.results)
+                  return {
+                      id: starship.uid,
+                      name: detailData.result.properties.name,
+                      model: detailData.result.properties.model,
+                  };
+              })
+          );
 
-        const mapResults = data.results.map(
-            result => {
-                const urlSplitted = result.url.split('/')
-                result.id = urlSplitted.at(-2) //asignamos a result una key id.
-                return result
-            }
-        );
-
-        setStarships(mapResults)
+          setStarships(mappedStarships);
+     
     };
 
-
+  
     const changeNumberPage = (action) => {
-        action === "increase" ? setPage(page + 1) : setPage(page - 1);
+        action === 'increase' ? setPage(page + 1) : setPage(page - 1);
     };
 
+  
     useEffect(() => {
-        fetchStarships();
+        fetchStarshipDetails();
     }, [page]);
-    
-    
 
+  
     return (
       <>
         <Navbar />
@@ -49,9 +52,9 @@ const StarshipsComponent = () => {
           <div className="w-90 md:w-3/4 mx-auto mb-4" key={index}>
            
            <Link  to={`/starships/${ship.id}`}>
-              <div className='p-2 border border-2 border-gray-300  rounded-md bg-gray-800 cursor-pointer hover:bg-gray-600'>
+              <div className='p-2  border-2 border-gray-300  rounded-md bg-gray-800 cursor-pointer hover:bg-gray-600'>
                   <h1 className=' text-sm md:text-md uppercase text-yellow-500 font-jedi-outline font-semibold'>{ship.name}</h1>
-                  <h3 className=' text-sm md:text-md text-white'>{ship.model}</h3>
+               <h3 className=' text-sm md:text-md text-white'>{ship.model}</h3>
               </div>
            </Link>
                     

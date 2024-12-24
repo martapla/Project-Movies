@@ -11,10 +11,10 @@ const StarshipCardComponent = () => {
     const id = params.shipId
    
     async function shipInfo() {
-        const request = await fetch(`https://swapi.dev/api/starships/${id}`)
+        const request = await fetch(`https://swapi.tech/api/starships/${id}`)
         const data = await request.json()
-        console.log(data)
-        setInfo(data)
+        console.log(data.result.properties)
+        setInfo(data.result.properties)
     }
 
     useEffect(() => {
@@ -24,16 +24,16 @@ const StarshipCardComponent = () => {
     return (
         <>
             <Link to= {'/starships'}>
-              <button className="w-20 md:w-40 py-2 text-zinc-400 text-center text-xs md:text-sm  mb-6 md:mt-10 border border-2 border-zinc-400 rounded-md hover:text-yellow-500 hover:border-yellow-500 cursor-pointer">Go Back</button>
+              <button className="w-20 md:w-40 py-2 text-zinc-400 text-center text-xs md:text-sm  mb-6 md:mt-10  border-2 border-zinc-400 rounded-md hover:text-yellow-500 hover:border-yellow-500 cursor-pointer">Go Back</button>
             </Link>
        
      
-            <div className='flex flex-col md:flex-row p-4 md:p-8 border border-2 border-gray-300 rounded-md bg-gray-800 cursor-pointer'>
+            <div className='flex flex-col md:flex-row p-4 md:p-8 border-2 border-gray-300 rounded-md bg-gray-800 cursor-pointer'>
                 <div>
                     <h1 className='text-md md:text-2xl uppercase text-center text-yellow-500 font-jedi-outline font-semibold p-4 md:pb-6'>{info.name}</h1>
 
                     <img src={`https://starwars-visualguide.com/assets/img/starships/${id}.jpg`} alt="image"
-                        className="w-50 h-auto rounded-md border border-4 border-yellow-500 "
+                        className="w-50 h-auto rounded-md border-4 border-yellow-500 "
                         onError={(e) => (e.target.src = "https://starwars-visualguide.com/assets/img/big-placeholder.jpg")}
                     />
                 </div>
