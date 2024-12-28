@@ -8,7 +8,7 @@ Built with `React + Vite`.
 
 ## 🌐 Live Demo
 
-https://movie-api-git-master-martapla.vercel.app/
+https://movie-api-git-master-martaplas-projects.vercel.app/
 
 ##  👩‍🔧 Project Instructions 
 
